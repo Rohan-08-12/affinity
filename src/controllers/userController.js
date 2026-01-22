@@ -18,7 +18,7 @@ const getUserProfile=async(req,res)=>{
         });
         // handle errors
     }catch(error){
-        console.log('Error fetching user profile:',error);
+        console.error('Error fetching user profile:',error);
         res.status(500).json({message:'Server error'});
     }
 }
@@ -46,7 +46,7 @@ const updateUserProfile=async(req,res)=>{
             preferences:user.preferences
     });
     } catch (error) {
-       console.log('Error updating user profile:',error);
+       console.error('Error updating user profile:',error);
          res.status(500).json({message:'Server error'});
     }
 }
@@ -71,7 +71,7 @@ const updatePreferences=async(req,res)=>{
             preferences: user.preferences
         });
     }catch(error){
-        console.log('Error updating preferences:',error);
+        console.error('Error updating preferences:',error);
         res.status(500).json({message:'Server error'});
     }
 }

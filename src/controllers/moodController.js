@@ -11,7 +11,7 @@ const logMood = async(req,res)=>{
         await newMood.save();
         res.status(201).json({message:'Mood logged successfully',moodId:newMood._id});
     } catch (error) {
-        console.log('Error logging mood:',error);
+        console.error('Error logging mood:',error);
         res.status(500).json({message:'Server error'});
     }
 }
@@ -26,7 +26,7 @@ const getMoodHistory=async(req,res)=>{
         }));
         res.status(200).json(response);
     } catch (error) {
-        console.log('Error fetching mood history:',error);
+        console.error('Error fetching mood history:',error);
         res.status(500).json({message:'Server error'});
     }
 }

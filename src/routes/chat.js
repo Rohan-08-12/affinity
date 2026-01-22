@@ -9,13 +9,13 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-// 🆕 Start a new conversation
+// Start a new conversation
 router.post('/start', authMiddleware, startSession);
 
-// 🆕 Continue existing conversation
+// Continue existing conversation
 router.post('/continue', authMiddleware, continueSession);
 
-// 🆕 Get specific conversation
+// Get specific conversation
 router.get('/session/:sessionId', authMiddleware, getSession);
 
 // Get all conversation history (existing)

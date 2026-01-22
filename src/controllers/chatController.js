@@ -53,9 +53,8 @@ Keep responses supportive, non-judgmental, and focused on the user's wellbeing. 
   return systemMessage;
 };
 
-// 🆕 START a new chat session
+// START a new chat session
 const startSession = async (req, res) => {
-  console.log('🚀 Starting new chat session...');
   
   try {
     const { prompt } = req.body;
@@ -103,9 +102,7 @@ const startSession = async (req, res) => {
       }
       
     } catch (groqError) {
-      console.error('Groq API Error:', groqError);
-      console.error('Error details:', groqError.message);
-      console.error('Error code:', groqError.status, groqError.code);
+      console.error('Groq API Error:', groqError.message);
       aiReply = hasCrisisContent 
         ? `I hear that you're going through a really difficult time. While I want to support you, I'm not equipped to handle crisis situations.${getCrisisResourcesMessage()}`
         : "I'm here to listen and support you. Unfortunately, I'm having trouble processing your message right now. Can you try again, or would you like to talk about something specific?";
@@ -139,9 +136,8 @@ const startSession = async (req, res) => {
   }
 };
 
-//  CONTINUE an existing chat session
+// CONTINUE an existing chat session
 const continueSession = async (req, res) => {
-  console.log('💬 Continuing chat session...');
   
   try {
     // Extract sessionId and prompt from request body
@@ -193,13 +189,11 @@ const continueSession = async (req, res) => {
       content: prompt.trim()
     });
 
-    console.log(`📚 Using ${messages.length} messages for context`);
-
     // Get AI response with full context
     let aiReply;
     try {
       const response = await groq.chat.completions.create({
-        model: "mixtral-8x7b-32768",
+        model: "llama-3.3-70b-versatile",
         messages: messages,
         max_tokens: 300,
         temperature: 0.7,
@@ -212,7 +206,7 @@ const continueSession = async (req, res) => {
       }
       
     } catch (groqError) {
-      console.error('Groq API Error:', groqError);
+      console.error('Groq API Error:', groqError.message);
       aiReply = hasCrisisContent 
         ? `I'm concerned about what you've shared.${getCrisisResourcesMessage()}`
         : "I'm having trouble processing that right now. Can you tell me more about what's on your mind?";
@@ -248,7 +242,7 @@ const continueSession = async (req, res) => {
   }
 };
 
-// 🆕 Get a specific session with full conversation
+// Get a specific session with full conversation
 const getSession = async (req, res) => {
   try {
     const { sessionId } = req.params;
