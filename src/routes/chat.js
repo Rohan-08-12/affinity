@@ -5,15 +5,16 @@ const {
   getSession, 
   getSessionHistory 
 } = require('../controllers/chatController');
-const authMiddleware = require('../middlewares/authMiddleware'); 
+const authMiddleware = require('../middlewares/authMiddleware');
+const { chatLimiter } = require('../middlewares/rateLimiter');
 
 const router = express.Router();
 
 // Start a new conversation
-router.post('/start', authMiddleware, startSession);
+router.post('/start', authMiddleware, chatLimiter, startSession);
 
 // Continue existing conversation
-router.post('/continue', authMiddleware, continueSession);
+router.post('/continue', authMiddleware, chatLimiter, continueSession);
 
 // Get specific conversation
 router.get('/session/:sessionId', authMiddleware, getSession);

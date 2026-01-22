@@ -45,6 +45,9 @@ const groq = require('./config/groq');
 const connectDB = require('./config/db');
 connectDB();
 
+// Apply general rate limiting to all routes
+const { generalLimiter } = require('./middlewares/rateLimiter');
+app.use(generalLimiter);
 
 app.use('/', routes);
 
